@@ -1,13 +1,43 @@
-import 'package:flutter/material.dart';
+import 'dart:convert';
 
-class TodoInfo extends StatelessWidget {
-  final dynamic mapResponse;
-  const TodoInfo({Key? key, required this.mapResponse}) : super(key: key);
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+
+class TodoInfo extends StatefulWidget {
+  final int index;
+  TodoInfo({Key? key,required this.index}) : super(key: key);
+
+  @override
+  State<TodoInfo> createState() => _TodoInfoState();
+}
+
+class _TodoInfoState extends State<TodoInfo> {
+  String baseUrl = "https://jsonplaceholder.typicode.com/todos";
+  dynamic mapResponse = {};
+  String? status;
+
+  todoGet()async{
+    var url = Uri.parse("$baseUrl/${widget.index+1}");
+    var response = await http.get(url);
+
+    if(response.statusCode == 200){
+      setState((){
+        mapResponse = jsonDecode(response.body);
+      });
+    }else{
+      return null;
+    }
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    todoGet();
+  }
 
   @override
   Widget build(BuildContext context) {
-    String status = mapResponse['completed'] == true ? "Finished" : "Unfinished";
-
+    status = mapResponse['completed'] == true ? "Finished" : "Unfinished";
     return Scaffold(
         appBar: AppBar(
           title: const Text('Todo info'),

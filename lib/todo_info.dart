@@ -5,7 +5,8 @@ import 'package:http/http.dart' as http;
 
 class TodoInfo extends StatefulWidget {
   final int index;
-  TodoInfo({Key? key,required this.index}) : super(key: key);
+  final dynamic todos;
+  const TodoInfo({Key? key,required this.index,required this.todos}) : super(key: key);
 
   @override
   State<TodoInfo> createState() => _TodoInfoState();
@@ -37,7 +38,7 @@ class _TodoInfoState extends State<TodoInfo> {
 
   @override
   Widget build(BuildContext context) {
-    status = mapResponse['completed'] == true ? "Finished" : "Unfinished";
+    status = widget.todos['completed'] == true ? "Finished" : "Unfinished";
     return Scaffold(
         appBar: AppBar(
           title: const Text('Todo info'),

@@ -55,7 +55,7 @@ class _HomePageState extends State<HomePage> {
                   secondary: IconButton(
                       onPressed: ()async{
                         await Navigator.push(context, MaterialPageRoute(
-                            builder: (context)=>TodoInfo(index: index)));
+                            builder: (context)=>TodoInfo(index: index,todos: mapResponse[index])));
                       },
                       icon: const Icon(Icons.info_outline)),
 
